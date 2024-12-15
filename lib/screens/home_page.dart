@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'restaurant.dart'; // Import the RestaurantPage
 
 class HomePage extends StatefulWidget {
   @override
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
             fontSize: 16.0,
           ),
         ),
-        backgroundColor: const Color(0xFF008000),
+        backgroundColor: const Color(0xFF0B885C),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
-                  borderSide: const BorderSide(color: Color(0xFF008000), width: 2.0),
+                  borderSide: const BorderSide(color: Color(0xFF0B885C), width: 2.0),
                 ),
               ),
             ),
@@ -73,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                   margin: const EdgeInsets.symmetric(vertical: 8.0),
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF008000), // Green background for food court container
+                    color: const Color(0xFF0B885C), // Green background for food court container
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Column(
@@ -95,39 +96,53 @@ class _HomePageState extends State<HomePage> {
                           itemCount: foodCourt['outlets'].length,
                           itemBuilder: (context, outletIndex) {
                             final outlet = foodCourt['outlets'][outletIndex];
-                            return Container(
-                              margin: const EdgeInsets.only(right: 8.0),
-                              width: 150.0,
-                              decoration: BoxDecoration(
-                                color: Colors.white, // White background for outlet box
-                                borderRadius: BorderRadius.circular(8.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 4.0,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    outlet['name'],
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      color: Color(0xFF008000), // Green text for outlet name
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.bold,
+                            return GestureDetector(
+                              onTap: () {
+                                // Navigate to the restaurant page on outlet click
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RestaurantPage(
+                                      restaurantName: outlet['name'],
+                                      headerImageUrl: outlet['image'],
                                     ),
                                   ),
-                                  Image.asset(
-                                    outlet['image'],
-                                    width: 130.0,
-                                    height: 90.0,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ],
+                                );
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(right: 8.0),
+                                width: 150.0,
+                                decoration: BoxDecoration(
+                                  color: Colors.white, // White background for outlet box
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 4.0,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      outlet['name'],
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: Color(0xFF0B885C), // Green text for outlet name
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Image.asset(
+                                      outlet['image'],
+                                      width: 130.0,
+                                      height: 90.0,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ],
+                                ),
                               ),
                             );
                           },
@@ -143,7 +158,7 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 1,
-        backgroundColor: const Color(0xFF008000),
+        backgroundColor: const Color(0xFF0B885C),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white.withOpacity(0.5),
         items: const [
@@ -156,8 +171,8 @@ class _HomePageState extends State<HomePage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle_rounded),
-          label: 'Dashboard',
+            icon: Icon(Icons.account_circle_rounded),
+            label: 'Dashboard',
           ),
         ],
       ),
