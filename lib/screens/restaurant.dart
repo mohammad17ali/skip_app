@@ -1,48 +1,22 @@
 import 'package:flutter/material.dart';
 
-class Product {
-  final String name;
-  final double price;
-  final String imageUrl;
-
-  Product({required this.name, required this.price, required this.imageUrl});
-}
-
-class DynamicShopPage extends StatefulWidget {
+class RestaurantPage extends StatefulWidget {
+  final String restaurantName;
   final String headerImageUrl;
 
-  const DynamicShopPage({Key? key, required this.headerImageUrl}) : super(key: key);
+  const RestaurantPage({
+    Key? key,
+    required this.restaurantName,
+    required this.headerImageUrl,
+  }) : super(key: key);
 
   @override
-  _DynamicShopPageState createState() => _DynamicShopPageState();
+  _RestaurantPageState createState() => _RestaurantPageState();
 }
 
-class _DynamicShopPageState extends State<DynamicShopPage> {
-  final ScrollController _scrollController = ScrollController();
-  double _headerOpacity = 1.0;
-
-  final List<Product> _products = [
-    Product(
-      name: 'Deluxe Thai',
-      price: 120,
-      imageUrl: 'https://via.placeholder.com/100',
-    ),
-    Product(
-      name: 'Super Saver Thai',
-      price: 120,
-      imageUrl: 'https://via.placeholder.com/100',
-    ),
-    Product(
-      name: 'Red Sauce Pasta',
-      price: 100,
-      imageUrl: 'https://via.placeholder.com/100',
-    ),
-    Product(
-      name: 'White Sauce Pasta',
-      price: 100,
-      imageUrl: 'https://via.placeholder.com/100',
-    ),
-  ];
+class _RestaurantPageState extends State<RestaurantPage> {
+  ScrollController _scrollController = ScrollController();
+  double _opacity = 1.0;
 
   @override
   void initState() {
@@ -52,7 +26,7 @@ class _DynamicShopPageState extends State<DynamicShopPage> {
 
   void _handleScroll() {
     setState(() {
-      _headerOpacity = 1.0 - (_scrollController.offset / 200).clamp(0.0, 1.0);
+      _opacity = 1 - (_scrollController.offset / 200).clamp(0.0, 1.0);
     });
   }
 
@@ -66,176 +40,134 @@ class _DynamicShopPageState extends State<DynamicShopPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'RCP, Ghansoli, Navi Mumbai',
-          style: TextStyle(
-            fontSize: 18,
+        title: Text(
+          'Reliance Corporate Park, Ghansoli, Thane - 400701',
+          style: const TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.bold,
+            fontSize: 16.0,
           ),
         ),
-        backgroundColor: Colors.green,
+        backgroundColor: const Color(0xFF0B885C),
       ),
-      body: Stack(
+      body: Column(
         children: [
-          CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              SliverAppBar(
-                expandedHeight: 250.0,
-                pinned: true,
-                flexibleSpace: LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) {
-                    return Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        Opacity(
-                          opacity: _headerOpacity,
-                          child: Container(
-                            color: Colors.grey, // Placeholder for a dummy shape
-                            child: const Center(
-                              child: Text(
-                                'Dummy Header',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+          Expanded(
+            child: Stack(
+              children: [
+                CustomScrollView(
+                  controller: _scrollController,
+                  slivers: [
+                    // Fadeable Display Image and Title
+                    SliverAppBar(
+                      expandedHeight: 200,
+                      pinned: false,
+                      flexibleSpace: Opacity(
+                        opacity: _opacity,
+                        child: FlexibleSpaceBar(
+                          background: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Image.asset(
+                                widget.headerImageUrl,
+                                fit: BoxFit.cover,
+                              ),
+                              Container(
+                                color: Colors.black38,
+                                alignment: Alignment.topLeft, 
+                                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0), 
+                                child: Text(
+                                  widget.restaurantName,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 42,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Colors.black.withOpacity(0.5), Colors.transparent],
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Opacity(
-                            opacity: _headerOpacity,
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: const Text(
-                                "Ruchi's",
-                                style: TextStyle(
-                                  fontSize: 28,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
+                      ),
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 16),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search in restaurant',
-                          prefixIcon: const Icon(Icons.search),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16.0),
+
+                    // Content with Rounded Corners
+                    SliverToBoxAdapter(
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: _products.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final product = _products[index];
-                          return Card(
-                            color: Colors.green[100],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
-                            margin: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 8.0),
-                            child: ListTile(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
-                              tileColor: Colors.white,
-                              leading: ClipRRect(
-                                borderRadius: BorderRadius.circular(12.0),
-                                child: Image.network(
-                                  product.imageUrl,
-                                  width: 50,
-                                  height: 50,
-                                  fit: BoxFit.cover,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 16),
+
+                            // Search Bar
+                            Padding(
+                              padding:
+                              const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.grey, width: 1.5),
+                                  borderRadius: BorderRadius.circular(25),
+                                  color: Colors.white.withOpacity(0.5),
+                                ),
+                                child: const TextField(
+                                  decoration: InputDecoration(
+                                    prefixIcon: Icon(Icons.search),
+                                    hintText: 'Search in restaurant',
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 10),
+                                  ),
                                 ),
                               ),
-                              title: Text(product.name),
-                              subtitle: Text('Rs ${product.price.toStringAsFixed(2)}'),
-                              trailing: StatefulBuilder(
-                                builder: (context, setState) {
-                                  bool isAdded = false;
-                                  return ElevatedButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        isAdded = !isAdded;
-                                      });
-                                    },
-                                    child: Text(isAdded ? 'Added' : 'Add'),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: isAdded ? Colors.lightBlue : Colors.green,
-                                    ),
-                                  );
-                                },
-                              ),
                             ),
-                          );
-                        },
+
+                            const SizedBox(height: 16),
+
+                            // Food Items List
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: foodItems.length,
+                              itemBuilder: (context, index) {
+                                final item = foodItems[index];
+                                return FoodItemTile(item: item);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 1,
+        backgroundColor: const Color(0xFF0B885C),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white.withOpacity(0.5),
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
+            icon: Icon(Icons.shopping_cart),
+            label: 'Cart',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
+            icon: Icon(Icons.account_circle_rounded),
+            label: 'Dashboard',
           ),
         ],
       ),
@@ -243,10 +175,142 @@ class _DynamicShopPageState extends State<DynamicShopPage> {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: DynamicShopPage(
-      headerImageUrl: '', // Placeholder
-    ),
-  ));
+final List<Map<String, dynamic>> foodItems = [
+  {
+    'image': 'assets/images/deluxe.png',
+    'name': 'Deluxe Thali',
+    'detail': 'Veg Fried Rice, Butter Naan, Gulab Jamun, Rajma Dal',
+    'price': '120',
+  },
+  {
+    'image': 'assets/images/super_ssver.png',
+    'name': 'Super Saver Thali',
+    'detail': 'Veg Fried Rice, Roti, Jalebi, Rajma Dal',
+    'price': '120',
+  },
+  {
+    'image': 'assets/images/red_pasta.png',
+    'name': 'Red Sauce Pasta',
+    'detail': 'Freshly prepared Red Sauce Pasta',
+    'price': '100',
+  },
+  {
+    'image': 'assets/images/white_pasta.png',
+    'name': 'White Sauce Pasta',
+    'detail': 'Freshly prepared White Sauce Pasta',
+    'price': '100',
+  },
+  {
+    'image': 'assets/images/red_pasta.png',
+    'name': 'Red Sauce Pasta',
+    'detail': 'Freshly prepared Red Sauce Pasta',
+    'price': '100',
+  },
+  {
+    'image': 'assets/images/deluxe.png',
+    'name': 'Deluxe Thali',
+    'detail': 'Veg Fried Rice, Butter Naan, Gulab Jamun, Rajma Dal',
+    'price': '120',
+  },
+  {
+  'image': 'assets/images/deluxe.png',
+  'name': 'Deluxe Thali',
+  'detail': 'Veg Fried Rice, Butter Naan, Gulab Jamun, Rajma Dal',
+  'price': '120',
+  },
+];
+
+// Food Item Widget
+class FoodItemTile extends StatelessWidget {
+  final Map<String, dynamic> item;
+
+  const FoodItemTile({Key? key, required this.item}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              spreadRadius: 1,
+              blurRadius: 4,
+              offset: Offset(0, 2),
+            )
+          ],
+        ),
+        child: Row(
+          children: [
+            // Image
+            ClipRRect(
+
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  bottomLeft: Radius.circular(12)),
+              child: Image.asset(
+                item['image'],
+                height: 80,
+                width: 80,
+                fit: BoxFit.cover,
+              ),
+              
+            ),
+
+
+            // Text Content
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item['name'],
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      item['detail'],
+                      style: const TextStyle(
+                          fontSize: 12, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Price and Add Button
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Rs ${item['price']}',
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Color(0xFF0B885C),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Text(
+                    'Add',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
