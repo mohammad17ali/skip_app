@@ -8,7 +8,7 @@ void main() {
 
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  runApp(const SkipApp());
+  runApp(const SkipApp()); 
 }
 
 class SkipApp extends StatelessWidget {
