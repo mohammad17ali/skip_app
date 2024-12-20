@@ -14,13 +14,13 @@ class _CartScreenState extends State<CartScreen> {
   // Sample cart list for demonstration
   List<Map<String, dynamic>> cartItems = [
     {
-      'image': 'assets/images/deluxe_thali.png', 
+      'image': 'https://via.placeholder.com/150', // Sample Image URL
       'name': 'Deluxe Thali',
       'quantity': 1,
       'price': 120
     },
     {
-      'image': 'assets/images/white_sauce_pasta.png',
+      'image': 'https://via.placeholder.com/150',
       'name': 'Red Sauce Pasta',
       'quantity': 2,
       'price': 100
