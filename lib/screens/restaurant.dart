@@ -100,12 +100,25 @@ class _RestaurantPageState extends State<RestaurantPage> {
                             topRight: Radius.circular(20),
                           ),
                         ),
+                        // iOS style container
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(height: 16),
 
                             // Search Bar
+                            Center(
+                              child: Container(
+                               
+                                width: 100,
+                                height: 5,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                margin: const EdgeInsets.only(bottom: 10),
+                              ),
+                            ),
                             Padding(
                               padding:
                               const EdgeInsets.symmetric(horizontal: 16.0),
