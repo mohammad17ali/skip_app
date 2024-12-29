@@ -22,6 +22,14 @@ class _HomePageState extends State<HomePage> {
       ],
     },
     {
+      'name': 'Food Court Building 8',
+      'outlets': [
+        {'name': 'Zomoz', 'image': 'assets/images/red_pasta.png', 'description': 'New Restaurant'},
+        {'name': 'Rajdhani', 'image': 'assets/images/red_pasta.png', 'description': 'New Restaurant'},
+        {'name': 'Zaibor', 'image': 'assets/images/red_pasta.png', 'description': 'New Restaurant'},
+      ],
+    },
+    {
       'name': '4a Food Court',
       'outlets': [
         {'name': 'Paradise Snacks', 'image': 'assets/images/zen.png', 'description': 'New Restaurant'},
@@ -37,11 +45,13 @@ class _HomePageState extends State<HomePage> {
         {'name': 'Zaibor', 'image': 'assets/images/red_pasta.png', 'description': 'New Restaurant'},
       ],
     },
+
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         title: Row(
           children: const [
@@ -202,30 +212,22 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0, // Change this based on the page index
+        type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.teal,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey.withOpacity(0.5),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: const Color(0xFF005151),
         onTap: (index) {
-          if (index == 0) {
-            // Navigate to the Cart Screen
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
-          } else if (index == 1) {
-            // Navigate to Home Page
+          if (index == 0) {} else if (index == 1) {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => DiscoverPage()),
             );
           } else if (index == 2) {
-            // Navigate to Dashboard (replace DashboardPage with your screen)
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => CartScreen()),
             );
           } else if (index == 3) {
-            // Navigate to Dashboard (replace DashboardPage with your screen)
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => DashboardPage()),
@@ -234,7 +236,7 @@ class _HomePageState extends State<HomePage> {
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(icon: Icon(Icons.podcasts_rounded), label: 'Discover'),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
