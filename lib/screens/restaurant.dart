@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'cart_screen.dart';
+import 'home_page.dart';
 
 class RestaurantPage extends StatefulWidget {
   final String restaurantName;
@@ -51,6 +53,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
       ),
       body: Column(
         children: [
+          // Scrollable Content
           Expanded(
             child: Stack(
               children: [
@@ -73,8 +76,8 @@ class _RestaurantPageState extends State<RestaurantPage> {
                               ),
                               Container(
                                 color: Colors.black38,
-                                alignment: Alignment.topLeft, 
-                                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0), 
+                                alignment: Alignment.topLeft, // Align the text to the top-left corner
+                                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0), // Add padding on all sides
                                 child: Text(
                                   widget.restaurantName,
                                   style: const TextStyle(
@@ -100,25 +103,12 @@ class _RestaurantPageState extends State<RestaurantPage> {
                             topRight: Radius.circular(20),
                           ),
                         ),
-                        // iOS style container
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(height: 16),
 
                             // Search Bar
-                            Center(
-                              child: Container(
-                               
-                                width: 100,
-                                height: 5,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                margin: const EdgeInsets.only(bottom: 10),
-                              ),
-                            ),
                             Padding(
                               padding:
                               const EdgeInsets.symmetric(horizontal: 16.0),
@@ -165,29 +155,46 @@ class _RestaurantPageState extends State<RestaurantPage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1,
-        backgroundColor: const Color(0xFF0B885C),
+        currentIndex: 1, // Change this based on the page index
+        backgroundColor: Colors.teal,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white.withOpacity(0.5),
+        onTap: (index) {
+          if (index == 0) {
+            // Navigate to the Cart Screen
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          } else if (index == 1) {} else if (index == 2) {
+            // Navigate to Dashboard (replace DashboardPage with your screen)
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CartScreen()),
+            );
+          }
+        },
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_rounded),
-            label: 'Dashboard',
+            icon: Icon(Icons.fastfood),
+            label: 'Restaurant',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Cart',
           ),
         ],
       ),
+
     );
   }
 }
 
+// Dummy Food Items Data
 final List<Map<String, dynamic>> foodItems = [
   {
     'image': 'assets/images/deluxe.png',
@@ -270,7 +277,7 @@ class FoodItemTile extends StatelessWidget {
                 width: 80,
                 fit: BoxFit.cover,
               ),
-              
+
             ),
 
 
