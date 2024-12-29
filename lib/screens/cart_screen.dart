@@ -90,7 +90,7 @@ class _CartScreenState extends State<CartScreen> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFFEEF2F9),
+                        color: const Color(0xFFC0E5E1),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: ListView.builder(
@@ -250,9 +250,10 @@ class _CartScreenState extends State<CartScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 2, // Change this based on the page index
+        type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.teal,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey.withOpacity(0.5),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: const Color(0xFF005151),
         onTap: (index) {
           if (index == 0) {
             Navigator.push(
@@ -264,12 +265,7 @@ class _CartScreenState extends State<CartScreen> {
               context,
               MaterialPageRoute(builder: (context) => DiscoverPage()),
             );
-          } else if (index == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CartScreen()),
-            );
-          } else if (index == 3) {
+          } else if (index == 2) {} else if (index == 3) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => DashboardPage()),
@@ -278,7 +274,7 @@ class _CartScreenState extends State<CartScreen> {
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(icon: Icon(Icons.podcasts_rounded), label: 'Discover'),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
